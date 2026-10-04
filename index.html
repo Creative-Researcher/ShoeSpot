@@ -1,0 +1,3126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShoeSpot - Shoe Shop System</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#0d1117;
+    color:white;
+}
+
+button,input,select,textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:linear-gradient(135deg,#07111e,#0d1117,#102238);
+}
+
+.login-box{
+    width:100%;
+    max-width:390px;
+    background:#161b22;
+    border:2px solid #2589ff;
+    border-radius:22px;
+    padding:35px 28px;
+    text-align:center;
+    box-shadow:0 15px 45px rgba(0,0,0,.55);
+}
+
+.logo-big{
+    font-size:60px;
+}
+
+.login-box h1{
+    margin:5px 0;
+    font-size:32px;
+}
+
+.blue{
+    color:#2589ff;
+}
+
+.login-box p{
+    color:#9da8b5;
+}
+
+.field{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    background:#0d1117;
+    border:1px solid #384452;
+    border-radius:10px;
+    color:white;
+    outline:none;
+}
+
+.field:focus{
+    border-color:#2589ff;
+}
+
+.primary{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#2589ff;
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+    margin-top:10px;
+}
+
+.primary:hover{
+    background:#1475df;
+}
+
+.error{
+    color:#ff6464;
+    font-weight:bold;
+    margin-top:14px;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+    min-height:100vh;
+}
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:#161b22;
+    border-bottom:2px solid #2589ff;
+    padding:13px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.brand{
+    font-size:24px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.navlinks{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    justify-content:center;
+}
+
+.navlinks button,
+.logout{
+    border:0;
+    border-radius:8px;
+    padding:9px 12px;
+    background:transparent;
+    color:#dce5ef;
+    font-weight:bold;
+}
+
+.navlinks button:hover,
+.navlinks button.active{
+    background:#2589ff;
+    color:white;
+}
+
+.logout{
+    background:#e53935!important;
+}
+
+.logout:hover{
+    background:#c62828!important;
+}
+
+.page{
+    max-width:1150px;
+    margin:auto;
+    padding:28px 18px 50px;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    padding:35px;
+    border:1px solid #2589ff;
+    border-radius:20px;
+    background:linear-gradient(135deg,#18283d,#101820);
+    margin-bottom:25px;
+}
+
+.hero h1{
+    margin:0 0 10px;
+    font-size:34px;
+}
+
+.hero p{
+    color:#b4c0cc;
+    line-height:1.6;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.small-btn{
+    border:0;
+    border-radius:9px;
+    padding:11px 16px;
+    font-weight:bold;
+}
+
+.btn-blue{
+    background:#2589ff;
+    color:white;
+}
+
+.btn-dark{
+    background:#252d37;
+    color:white;
+}
+
+.btn-red{
+    background:#e53935;
+    color:white;
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:16px;
+}
+
+.stat{
+    background:#161b22;
+    border:1px solid #303945;
+    border-radius:17px;
+    padding:24px;
+    cursor:pointer;
+}
+
+.stat:hover{
+    border-color:#2589ff;
+}
+
+.stat .icon{
+    font-size:40px;
+}
+
+.stat h3{
+    margin:12px 0 8px;
+}
+
+.stat strong{
+    font-size:30px;
+    color:#2589ff;
+}
+
+/* ================= PRODUCTS ================= */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(235px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:#161b22;
+    border:1px solid #303945;
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.card:hover{
+    border-color:#2589ff;
+}
+
+.product-img{
+    width:100%;
+    height:210px;
+    object-fit:cover;
+    background:#222;
+}
+
+.card-body{
+    padding:18px;
+}
+
+.card h3{
+    margin:0 0 8px;
+    font-size:18px;
+}
+
+.desc{
+    color:#aeb9c5;
+    line-height:1.45;
+    font-size:14px;
+    min-height:65px;
+}
+
+.price{
+    font-size:20px;
+    font-weight:bold;
+    color:#2589ff;
+    margin:12px 0;
+}
+
+.select-product{
+    width:100%;
+    border:0;
+    border-radius:9px;
+    padding:11px;
+    background:#2589ff;
+    color:white;
+    font-weight:bold;
+}
+
+/* ================= MODALS ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:300;
+    background:rgba(0,0,0,.78);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    overflow:auto;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:620px;
+    background:#161b22;
+    border:1px solid #2589ff;
+    border-radius:18px;
+    padding:23px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.close{
+    border:0;
+    background:#303945;
+    color:white;
+    border-radius:8px;
+    padding:8px 12px;
+}
+
+
+.product-details-card{
+    margin-top:16px;
+    padding:16px;
+    border:1px solid #283443;
+    border-radius:12px;
+    background:#111821;
+}
+.product-details-card h4{
+    margin:0 0 8px;
+    color:#fff;
+}
+.product-details-card p{
+    margin:7px 0;
+    line-height:1.6;
+    color:#aeb9c5;
+}
+.limitations-box{
+    margin-top:12px;
+    padding:13px;
+    border-left:4px solid #ffb020;
+    border-radius:8px;
+    background:#211d12;
+}
+.limitations-box strong{
+    color:#ffd166;
+}
+.payment-box{
+    margin-top:16px;
+    padding:15px;
+    border:1px solid #283443;
+    border-radius:12px;
+    background:#111821;
+}
+.payment-box h3{
+    margin:0 0 10px;
+}
+
+
+/* TikTok-style checkout payment choices */
+.payment-options{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    margin-top:10px;
+}
+.payment-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 14px;
+    border:1px solid #303945;
+    border-radius:11px;
+    background:#151b23;
+    cursor:pointer;
+    transition:.2s;
+}
+.payment-option:hover{
+    border-color:#2589ff;
+    background:#192330;
+}
+.payment-option input{
+    width:18px;
+    height:18px;
+    accent-color:#2589ff;
+}
+.payment-option.selected{
+    border-color:#2589ff;
+    background:#172638;
+}
+.payment-icon{
+    font-size:23px;
+    width:32px;
+    text-align:center;
+}
+.payment-info{
+    flex:1;
+}
+.payment-name{
+    color:#fff;
+    font-weight:700;
+    font-size:15px;
+}
+.payment-desc{
+    color:#8f9cab;
+    font-size:12px;
+    margin-top:2px;
+}
+.payment-check{
+    color:#2589ff;
+    font-weight:bold;
+    display:none;
+}
+.payment-option.selected .payment-check{
+    display:block;
+}
+.payment-note{
+    color:#8f9cab;
+    font-size:13px;
+    margin-top:8px;
+    line-height:1.5;
+}
+
+.product-stock{
+    margin:8px 0 12px;
+}
+
+.stock-badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:7px;
+    background:#16331f;
+    color:#6ee7a2;
+    border:1px solid #245d38;
+    font-size:13px;
+    font-weight:700;
+}
+
+.stock-badge.low{
+    background:#352a12;
+    color:#ffd166;
+    border-color:#7a5a19;
+}
+
+.stock-badge.out{
+    background:#351518;
+    color:#ff8f8f;
+    border-color:#6e272d;
+}
+
+.out-of-stock-btn{
+    opacity:.55;
+    cursor:not-allowed !important;
+    background:#3a2024 !important;
+}
+
+.modal-stock{
+    margin:10px 0 4px;
+}
+
+.action-row button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+.option-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:10px;
+}
+
+.option-label{
+    font-weight:bold;
+    font-size:14px;
+    color:#c8d2dc;
+}
+
+.action-row{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.action-row button{
+    flex:1;
+    padding:13px;
+    border:0;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.buy{
+    background:#2589ff;
+    color:white;
+}
+
+.cart{
+    background:#2e3742;
+    color:white;
+}
+
+.total-box{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#0d1117;
+}
+
+.total-box strong{
+    color:#2589ff;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    overflow-x:auto;
+    background:#161b22;
+    border:1px solid #303945;
+    border-radius:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid #303945;
+    text-align:left;
+}
+
+th{
+    background:#202731;
+    color:#7fc0ff;
+}
+
+td{
+    color:#d8e0e8;
+}
+
+.empty{
+    text-align:center;
+    padding:35px;
+    color:#9aa7b5;
+}
+
+/* ================= CONTACT ================= */
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:18px;
+}
+
+.info-card{
+    background:#161b22;
+    border:1px solid #303945;
+    border-radius:17px;
+    padding:22px;
+}
+
+.owner-photo{
+    width:180px;
+    height:180px;
+    object-fit:cover;
+    border-radius:50%;
+    border:3px solid #2589ff;
+    display:block;
+    margin:0 auto 18px;
+}
+
+.info-card h3{
+    color:#2589ff;
+}
+
+.info-card p{
+    color:#bdc7d1;
+    line-height:1.6;
+}
+
+/* ================= RECEIPT ================= */
+
+.receipt{
+    background:white;
+    color:#111;
+    border-radius:12px;
+    padding:25px;
+    max-width:650px;
+    margin:auto;
+}
+
+.receipt h2{
+    text-align:center;
+}
+
+.receipt hr{
+    border:0;
+    border-top:1px solid #bbb;
+}
+
+.receipt-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:7px 0;
+}
+
+.receipt-total{
+    font-size:21px;
+    font-weight:bold;
+    padding-top:12px;
+    border-top:2px solid #111;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    text-align:center;
+    color:#687687;
+    padding:25px 15px;
+    border-top:1px solid #202833;
+}
+
+/* ================= TOAST ================= */
+
+#toast{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:500;
+    background:#2589ff;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    display:none;
+    font-weight:bold;
+}
+
+@media(max-width:760px){
+
+    .navbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .navlinks{
+        width:100%;
+        justify-content:flex-start;
+    }
+
+    .hero{
+        padding:24px;
+    }
+
+    .hero h1{
+        font-size:27px;
+    }
+
+    .products{
+        grid-template-columns:1fr;
+    }
+
+    .action-row{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==================================================
+LOGIN
+================================================== -->
+
+<div id="loginPage">
+
+    <div class="login-box">
+
+        <div class="logo-big">👟</div>
+
+        <h1>
+            SHOE<span class="blue">SPOT</span>
+        </h1>
+
+        <p>Login to access the ShoeSpot System</p>
+
+        <input
+            class="field"
+            id="loginUsername"
+            type="text"
+            placeholder="Username"
+        >
+
+        <input
+            class="field"
+            id="loginPassword"
+            type="password"
+            placeholder="Password"
+        >
+
+        <button class="primary" onclick="login()">
+            LOGIN
+        </button>
+
+        <div class="error" id="loginError"></div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+MAIN APPLICATION
+================================================== -->
+
+<div id="app">
+
+<nav class="navbar">
+
+    <div class="brand">
+        👟 SHOE<span class="blue">SPOT</span>
+    </div>
+
+    <div class="navlinks">
+
+        <button
+            onclick="showPage('home',this)"
+            class="active">
+            Home
+        </button>
+
+        <button onclick="showPage('shop',this)">
+            Shop
+        </button>
+
+        <button onclick="showPage('payments',this)">
+            💳 Payments
+        </button>
+
+        <button onclick="showPage('about',this)">
+            About
+        </button>
+
+        <button onclick="showPage('terms',this)">
+            Terms
+        </button>
+
+        <button onclick="showPage('cart',this)">
+            🛒 Cart
+            <span id="cartCount">0</span>
+        </button>
+
+        <button onclick="showPage('history',this)">
+            Purchase History
+        </button>
+
+        <button onclick="showPage('contact',this)">
+            Contact
+        </button>
+
+    </div>
+
+    <button class="logout" onclick="logout()">
+        LOGOUT
+    </button>
+
+</nav>
+
+
+<main class="page">
+
+<!-- ==================================================
+HOME
+================================================== -->
+
+<section id="home" class="section active">
+
+    <div class="hero">
+
+        <h1>
+            Welcome to ShoeSpot! 👟
+        </h1>
+
+        <p>
+            Your simple online shoe shopping system.
+            Browse our products, select your size, color
+            and quantity, then choose whether to BUY or
+            ADD TO CART.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="small-btn btn-blue"
+                onclick="showPage('shop')">
+                SHOP NOW
+            </button>
+
+            <button
+                class="small-btn btn-dark"
+                onclick="showPage('contact')">
+                CONTACT US
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+        <div class="stat" onclick="showPage('shop')">
+
+            <div class="icon">👟</div>
+
+            <h3>Available Products</h3>
+
+            <strong id="productCount">
+                10
+            </strong>
+
+        </div>
+
+
+        <div class="stat" onclick="showPage('cart')">
+
+            <div class="icon">🛒</div>
+
+            <h3>Cart Items</h3>
+
+            <strong id="homeCartCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat" onclick="showPage('history')">
+
+            <div class="icon">📦</div>
+
+            <h3>Purchases</h3>
+
+            <strong id="homePurchaseCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="stat" onclick="showPage('contact')">
+
+            <div class="icon">📞</div>
+
+            <h3>Contact</h3>
+
+            <strong>1</strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+SHOP
+================================================== -->
+
+<section id="shop" class="section">
+
+    <div class="hero">
+
+        <h1>👟 Shoe Collection</h1>
+
+        <p>
+            Choose a product to view its description,
+            size, color and quantity.
+        </p>
+
+    </div>
+
+    <div id="productList" class="products"></div>
+
+</section>
+
+
+<!-- ==================================================
+ABOUT
+================================================== -->
+
+<section id="about" class="section">
+
+    <div class="hero">
+
+        <h1>About ShoeSpot</h1>
+
+        <p>
+            ShoeSpot is a simple online shoe shop system
+            created as a school project. It allows customers
+            to browse shoes, select product options, add
+            products to a cart and complete a purchase.
+        </p>
+
+    </div>
+
+
+    <div class="info-grid">
+
+        <div class="info-card">
+
+            <h3>🎯 Our Purpose</h3>
+
+            <p>
+                The purpose of ShoeSpot is to demonstrate
+                a basic online shopping system using
+                HTML, CSS, JavaScript and PHP.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>🛍️ Shopping Features</h3>
+
+            <p>
+                Customers can view products, choose a size,
+                select a color, set the quantity, add items
+                to the cart and purchase products.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>📦 Order Tracking</h3>
+
+            <p>
+                After purchasing, the system records the
+                order and automatically calculates an
+                expected receiving date five days after
+                purchase.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+TERMS
+================================================== -->
+
+<section id="terms" class="section">
+
+    <div class="hero">
+
+        <h1>Terms and Conditions</h1>
+
+        <p>
+            Please read the following terms before using
+            the ShoeSpot shopping system.
+        </p>
+
+    </div>
+
+
+    <div class="info-grid">
+
+        <div class="info-card">
+
+            <h3>1. Product Information</h3>
+
+            <p>
+                Product names, descriptions and prices
+                are provided for this school project.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>2. Customer Information</h3>
+
+            <p>
+                Customers should provide correct name,
+                address and contact information when
+                completing an order.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>3. Orders</h3>
+
+            <p>
+                Once an order is confirmed, it will be
+                recorded in Purchase History.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>4. Delivery</h3>
+
+            <p>
+                The expected receiving date is automatically
+                set to five days after the purchase date.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+CART
+================================================== -->
+
+<section id="cart" class="section">
+
+    <div class="hero">
+
+        <h1>🛒 Shopping Cart</h1>
+
+        <p>
+            Review your selected products before purchasing.
+        </p>
+
+    </div>
+
+    <div id="cartContent"></div>
+
+</section>
+
+
+<!-- ==================================================
+PURCHASE HISTORY
+================================================== -->
+
+<section id="history" class="section">
+
+    <div class="hero">
+
+        <h1>📦 Purchase History</h1>
+
+        <p>
+            Your completed purchases and expected receiving
+            dates are shown here.
+        </p>
+
+    </div>
+
+    <div id="historyContent"></div>
+
+</section>
+
+
+<!-- ==================================================
+PAYMENT METHODS
+================================================== -->
+
+<section id="payments" class="section">
+
+    <div class="hero">
+
+        <h1>💳 Payment Methods</h1>
+
+        <p>
+            ShoeSpot offers several payment options for customer convenience.
+            Choose your preferred method during checkout.
+        </p>
+
+    </div>
+
+    <div class="info-grid">
+
+        <div class="info-card">
+            <h3>💵 Cash on Delivery</h3>
+            <p>
+                Pay when your order is delivered. This is the simplest
+                option if you prefer not to send payment online.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>📱 GCash</h3>
+            <p>
+                Select GCash during checkout and confirm the payment
+                instructions with the ShoeSpot owner before sending funds.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>📱 Maya</h3>
+            <p>
+                Maya is available as a selectable payment option.
+                Confirm the owner's current payment details before paying.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>🏦 Bank Transfer</h3>
+            <p>
+                Customers may select bank transfer and coordinate the
+                correct bank details with the ShoeSpot owner.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="info-card" style="margin-top:18px">
+
+        <h3>🔒 Payment Safety Notice</h3>
+
+        <p>
+            This website is a customer-facing shop interface and does not
+            directly process or verify online payments. The selected payment
+            method is saved with the order for reference. Never send payment
+            to an unverified account or number; confirm the official details
+            with the ShoeSpot owner first.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+CONTACT
+================================================== -->
+
+<section id="contact" class="section">
+
+    <div class="hero">
+
+        <h1>📞 Contact & Information</h1>
+
+        <p>
+            You can contact the ShoeSpot owner using
+            the information below.
+        </p>
+
+    </div>
+
+
+    <div class="info-grid">
+
+        <!-- OWNER PHOTO -->
+
+        <div class="info-card">
+
+            <img
+                src="images/junrey.jpg"
+                class="owner-photo"
+                alt="ShoeSpot Owner"
+                onerror="
+                    this.style.display='none';
+                    document.getElementById('photoError').style.display='block';
+                "
+            >
+
+            <p
+                id="photoError"
+                style="display:none;text-align:center;"
+            >
+                Make sure <b>8087.webp</b> is in the
+                same folder as this PHP file.
+            </p>
+
+            <h3>👤 ShoeSpot Owner</h3>
+
+            <p>
+                <b>Junrey A. Paalisbo</b>
+            </p>
+
+        </div>
+
+
+        <!-- CONTACT DETAILS -->
+
+        <div class="info-card">
+
+            <h3>📍 Location</h3>
+
+            <p>
+               Tubod,Lakewood,
+                Zamboanga del Sur
+            </p>
+
+
+            <h3>📱 Contact Number</h3>
+
+            <p>
+                09360725911
+            </p>
+
+
+            <h3>📘 Facebook Page</h3>
+
+            <p>
+                Junrey A. Paalisbo
+            </p>
+
+
+            <h3>⏰ Store Information</h3>
+
+            <p>
+                Online Shoe Shop / School Project
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+RECEIPT
+================================================== -->
+
+<section id="receiptPage" class="section">
+
+    <div class="hero">
+
+        <h1>🧾 Purchase Receipt</h1>
+
+        <p>
+            Your purchase has been recorded successfully.
+        </p>
+
+    </div>
+
+    <div id="receiptContent"></div>
+
+    <div style="text-align:center;margin-top:15px;">
+
+        <button
+            class="small-btn btn-blue"
+            onclick="window.print()">
+            🖨️ Print Receipt
+        </button>
+
+        <button
+            class="small-btn btn-dark"
+            onclick="showPage('history')">
+            Back to Purchase History
+        </button>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+    © 2026 ShoeSpot | Shoe Management System
+</footer>
+
+</div>
+
+
+<!-- ==================================================
+PRODUCT MODAL
+================================================== -->
+
+<div class="modal" id="productModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2 id="modalTitle">
+                Product
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <img
+            id="modalImage"
+            class="product-img"
+            style="border-radius:12px;height:220px"
+            src=""
+            alt="Product"
+        >
+
+
+        <p
+            id="modalDescription"
+            class="desc">
+        </p>
+
+        <div class="product-details-card">
+
+            <h4>⚠️ Product Limitations</h4>
+
+            <div
+                id="modalLimitations"
+                class="limitations-box">
+            </div>
+
+        </div>
+
+
+        <div
+            id="modalStock"
+            class="product-stock modal-stock">
+        </div>
+
+
+        <div
+            class="price"
+            id="modalPrice">
+        </div>
+
+
+        <div class="option-grid">
+
+            <div>
+
+                <div class="option-label">
+                    SIZE
+                </div>
+
+                <select
+                    class="field"
+                    id="size">
+
+                    <option>38</option>
+                    <option>39</option>
+                    <option selected>40</option>
+                    <option>41</option>
+                    <option>42</option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <div class="option-label">
+                    COLOR
+                </div>
+
+                <select
+                    class="field"
+                    id="color">
+
+                    <option>Black</option>
+                    <option>White</option>
+                    <option>Blue</option>
+                    <option>Red</option>
+                    <option>Gray</option>
+                    <option>Brown</option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <div class="option-label">
+                    QUANTITY
+                </div>
+
+                <input
+                    class="field"
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    value="1"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="total-box">
+
+            Total:
+            <strong id="modalTotal">
+                ₱0.00
+            </strong>
+
+        </div>
+
+
+        <div class="action-row">
+
+            <button
+                class="cart"
+                onclick="addToCart()">
+                🛒 ADD TO CART
+            </button>
+
+            <button
+                class="buy"
+                onclick="buyNow()">
+                💳 BUY
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+CHECKOUT MODAL
+================================================== -->
+
+<div class="modal" id="checkoutModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2>
+                🛍️ Customer Information
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeCheckout()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <p style="color:#aeb9c5">
+            Please enter your information before
+            completing the purchase.
+        </p>
+
+
+        <input
+            class="field"
+            id="customerName"
+            placeholder="Full Name"
+        >
+        
+
+
+        <textarea
+            class="field"
+            id="customerAddress"
+            placeholder="Complete Address"
+            rows="3"></textarea>
+
+
+        <input
+            class="field"
+            id="customerContact"
+            placeholder="Contact Number"
+            type="tel"
+        >
+
+        <div class="payment-box">
+
+            <h3>💳 Payment Method</h3>
+
+            <p style="color:#aeb9c5;font-size:13px;margin:0 0 10px">
+                Choose how you want to pay for this order.
+            </p>
+
+            <div class="payment-options">
+
+                <label class="payment-option selected" onclick="selectPayment(this)">
+                    <input type="radio" name="paymentMethod" value="Cash on Delivery" checked>
+                    <span class="payment-icon">💵</span>
+                    <span class="payment-info">
+                        <span class="payment-name">Cash on Delivery (COD)</span>
+                        <span class="payment-desc">Pay when your order arrives.</span>
+                    </span>
+                    <span class="payment-check">✓</span>
+                </label>
+
+                <label class="payment-option" onclick="selectPayment(this)">
+                    <input type="radio" name="paymentMethod" value="GCash">
+                    <span class="payment-icon">📱</span>
+                    <span class="payment-info">
+                        <span class="payment-name">GCash</span>
+                        <span class="payment-desc">Pay using your GCash account.</span>
+                    </span>
+                    <span class="payment-check">✓</span>
+                </label>
+
+                <label class="payment-option" onclick="selectPayment(this)">
+                    <input type="radio" name="paymentMethod" value="Maya">
+                    <span class="payment-icon">📲</span>
+                    <span class="payment-info">
+                        <span class="payment-name">Maya</span>
+                        <span class="payment-desc">Pay using your Maya account.</span>
+                    </span>
+                    <span class="payment-check">✓</span>
+                </label>
+
+                <label class="payment-option" onclick="selectPayment(this)">
+                    <input type="radio" name="paymentMethod" value="Bank Transfer">
+                    <span class="payment-icon">🏦</span>
+                    <span class="payment-info">
+                        <span class="payment-name">Bank Transfer</span>
+                        <span class="payment-desc">Transfer payment to the shop's verified bank account.</span>
+                    </span>
+                    <span class="payment-check">✓</span>
+                </label>
+
+            </div>
+
+            <div class="payment-note">
+                Your selected method will be saved with the order.
+                For GCash, Maya, and Bank Transfer, the website records
+                your choice but does not process the actual payment.
+            </div>
+
+        </div>
+
+
+        <div
+            id="checkoutSummary"
+            class="total-box">
+        </div>
+
+
+        <button
+            class="primary"
+            onclick="completePurchase()">
+            CONFIRM PURCHASE
+        </button>
+
+    </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* ==================================================
+PRODUCT DATA
+================================================== */
+
+const products = [
+
+{
+    id:1,
+    name:"Nike Air Running Pro",
+    price:1500,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85",
+    description:"Lightweight running shoes designed for everyday comfort, walking, jogging, and active use. The cushioned sole helps provide comfortable steps during movement, while the breathable upper is designed to keep the feet feeling fresh. The sporty shape makes this a practical choice for exercise, daily errands, school activities, and casual outfits.",
+    limitations:"Not intended for extreme trail running, professional racing, or very rough terrain. Fit and cushioning preference may vary by customer."
+},
+
+{
+    id:2,
+    name:"Classic White Sneakers",
+    price:1800,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=900&q=85",
+    description:"Clean and versatile white sneakers suitable for school, casual outfits, daily errands, and everyday activities. The simple low-profile design is easy to match with jeans, shorts, uniforms, and casual clothing. The comfortable sole is designed for regular walking, while the classic white finish gives a neat and timeless appearance.",
+    limitations:"The white finish can show dirt more easily and may require frequent cleaning. Best suited for casual use rather than heavy-duty outdoor activities."
+},
+
+{
+    id:3,
+    name:"Urban Black Sneakers",
+    price:1700,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=85",
+    description:"Modern black sneakers with a sporty urban style made for everyday walking and casual activities. The dark color gives a clean and easy-to-match appearance, while the casual athletic shape provides a comfortable option for daily wear. A practical choice for school, shopping, travel, and relaxed outings.",
+    limitations:"Designed mainly for casual walking and lifestyle use, not for demanding sports or rugged outdoor terrain. Dark material may still show dust and scuff marks."
+},
+
+{
+    id:4,
+    name:"Blue Sport Shoes",
+    price:1600,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=900&q=85",
+    description:"Sport-inspired shoes designed for training, walking, light workouts, and daily activities. The supportive sole helps provide stability while moving, and the breathable design is intended to provide a more comfortable feel during active use. Their blue sporty appearance adds a fresh and energetic touch to casual outfits.",
+    limitations:"Suitable for training, walking, and light workouts, but not intended as specialized footwear for professional or high-impact sports."
+},
+
+{
+    id:5,
+    name:"Brown Casual Shoes",
+    price:1900,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=85",
+    description:"Versatile brown casual shoes with a neat finish and a classic everyday appearance. The warm brown color pairs well with jeans, trousers, and other casual clothing. Designed for comfortable everyday wear, they are a practical choice for school activities, casual gatherings, family occasions, and regular outings.",
+    limitations:"Best for casual and everyday use rather than running, hiking, or intense athletic activities. The brown finish may require care to maintain its appearance."
+},
+
+{
+    id:6,
+    name:"Red Street Sneakers",
+    price:1750,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=900&q=85",
+    description:"Bold red street-style sneakers made for a sporty and confident casual look. The comfortable upper is designed for everyday movement, while the flexible outsole supports natural walking. Their eye-catching red color makes them a standout choice for casual outfits, weekend activities, and relaxed outdoor trips.",
+    limitations:"The bright red design may not match every outfit or uniform. Intended for casual street wear and everyday walking, not specialized athletic performance."
+},
+
+{
+    id:7,
+    name:"Gray Lifestyle Shoes",
+    price:1650,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=900&q=85",
+    description:"Minimal gray lifestyle shoes designed for comfortable daily use. The neutral gray color makes them easy to combine with shirts, jeans, shorts, and other casual clothing. Their simple appearance gives a clean modern look, making them suitable for school, errands, walking, travel, and everyday activities.",
+    limitations:"Designed for lifestyle and everyday use, not for heavy-duty sports or rugged outdoor activities. Neutral styling may be less suitable for formal occasions."
+},
+
+{
+    id:8,
+    name:"Premium Black Trainers",
+    price:2200,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1554130840-7f6c7d0b6f9a?auto=format&fit=crop&w=900&q=85",
+    description:"Premium-looking black trainers with a durable outsole and supportive construction for active everyday use. The black finish gives them a sleek and versatile appearance, while the trainer-style build is suitable for walking, light exercise, and other daily activities. A good option for customers who want a sporty shoe with a more refined look.",
+    limitations:"Although built for active everyday use, it is not presented as specialized professional training footwear. Customers with specific sports needs should choose purpose-built shoes."
+},
+
+{
+    id:9,
+    name:"White Court Sneakers",
+    price:2000,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1562183241-b937e95585b6?auto=format&fit=crop&w=900&q=85",
+    description:"Classic court-inspired sneakers with a clean white appearance and a simple sporty silhouette. They are designed for everyday walking and casual wear, with a style that works well with jeans, shorts, and other relaxed outfits. Their clean look makes them suitable for school, weekend outings, casual gatherings, and daily use.",
+    limitations:"Designed for casual walking and lifestyle use rather than intensive sports or rough outdoor terrain. The white surface may require regular cleaning."
+},
+
+{
+    id:10,
+    name:"Outdoor Hiking Shoes",
+    price:2500,
+    stock:200,
+    image:"https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=900&q=85",
+    description:"Outdoor shoes with a rugged-looking outsole and supportive build for walking and light outdoor activities. Their practical design is suited for trips where extra grip and stability are useful, while the sturdy appearance gives them an outdoors-ready look. Suitable for nature walks, casual hiking, travel, and other light outdoor adventures.",
+    limitations:"Suitable for light hiking and outdoor activities, but not intended as technical mountaineering or extreme-terrain footwear. Grip can vary depending on surface and weather."
+}
+
+];
+
+
+/* ==================================================
+VARIABLES
+================================================== */
+
+let selectedProduct = null;
+
+let selectedAction = "";
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("shoeSpotCart") || "[]"
+    );
+
+let purchases =
+    JSON.parse(
+        localStorage.getItem("shoeSpotPurchases") || "[]"
+    );
+
+/* ==================================================
+INVENTORY / STOCK
+Each product starts with 200 units. Stock is saved in
+localStorage so completed orders reduce the inventory.
+================================================== */
+
+let inventory =
+    JSON.parse(
+        localStorage.getItem("shoeSpotInventory") || "null"
+    );
+
+if(!inventory || typeof inventory !== "object"){
+    inventory = {};
+}
+
+products.forEach(product => {
+    if(!Number.isFinite(Number(inventory[product.id]))){
+        inventory[product.id] = product.stock;
+    }
+});
+
+function getStock(productId){
+    return Math.max(0, Number(inventory[productId] ?? 0));
+}
+
+function saveInventory(){
+    localStorage.setItem(
+        "shoeSpotInventory",
+        JSON.stringify(inventory)
+    );
+}
+
+function stockStatus(productId){
+    const stock = getStock(productId);
+
+    if(stock <= 0){
+        return '<span class="stock-badge out">OUT OF STOCK</span>';
+    }
+
+    if(stock <= 10){
+        return `<span class="stock-badge low">⚠️ Only ${stock} left</span>`;
+    }
+
+    return `<span class="stock-badge">Stock: ${stock}</span>`;
+}
+
+
+saveInventory();
+
+
+/* ==================================================
+LOGIN
+================================================== */
+
+function login(){
+
+    const username =
+        document.getElementById("loginUsername").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    if(
+        username === "Paalisbo" &&
+        password === "IT121"
+    ){
+
+        document.getElementById("loginPage")
+            .style.display="none";
+
+        document.getElementById("app")
+            .style.display="block";
+
+        document.getElementById("loginError")
+            .textContent="";
+
+        renderProducts();
+
+        updateCounts();
+
+    }else{
+
+        document.getElementById("loginError")
+            .textContent=
+            "Incorrect username or password.";
+
+    }
+
+}
+
+
+document
+.getElementById("loginPassword")
+.addEventListener("keydown",function(e){
+
+    if(e.key==="Enter"){
+        login();
+    }
+
+});
+
+
+function logout(){
+
+    document.getElementById("app")
+        .style.display="none";
+
+    document.getElementById("loginPage")
+        .style.display="flex";
+
+    document.getElementById("loginUsername")
+        .value="";
+
+    document.getElementById("loginPassword")
+        .value="";
+
+}
+
+
+/* ==================================================
+NAVIGATION
+================================================== */
+
+function showPage(page,button=null){
+
+    document
+        .querySelectorAll(".section")
+        .forEach(section=>{
+            section.classList.remove("active");
+        });
+
+    document
+        .getElementById(page)
+        .classList.add("active");
+
+
+    document
+        .querySelectorAll(".navlinks button")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+
+    if(button){
+        button.classList.add("active");
+    }
+
+
+    if(page==="shop"){
+        renderProducts();
+    }
+
+    if(page==="cart"){
+        renderCart();
+    }
+
+    if(page==="history"){
+        renderHistory();
+    }
+
+    updateCounts();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* ==================================================
+MONEY
+================================================== */
+
+function money(value){
+
+    return "₱" +
+        Number(value).toLocaleString(
+            "en-PH",
+            {
+                minimumFractionDigits:2
+            }
+        );
+
+}
+
+
+/* ==================================================
+RENDER PRODUCTS
+================================================== */
+
+function renderProducts(){
+
+    const list =
+        document.getElementById("productList");
+
+    if(!list) return;
+
+    list.innerHTML =
+        products.map(product=>{
+            const stock = getStock(product.id);
+            const button = stock <= 0
+                ? `<button class="select-product out-of-stock-btn" disabled>OUT OF STOCK</button>`
+                : `<button class="select-product" onclick="openProduct(${product.id})">VIEW PRODUCT</button>`;
+
+            return `
+        <div class="card">
+
+            <img
+                class="product-img"
+                src="${product.image}"
+                alt="${product.name}"
+            >
+
+            <div class="card-body">
+
+                <h3>
+                    ${product.name}
+                </h3>
+
+                <p class="desc">
+                    ${product.description}
+                </p>
+
+                <div class="price">
+                    ${money(product.price)}
+                </div>
+
+                <div class="product-stock">
+                    ${stockStatus(product.id)}
+                </div>
+
+                ${button}
+
+            </div>
+
+        </div>
+    `;
+        }).join("");
+
+}
+
+
+/* ==================================================
+OPEN PRODUCT
+================================================== */
+
+function openProduct(id){
+
+    selectedProduct =
+        products.find(product=>product.id===id);
+
+    if(!selectedProduct) return;
+
+    const stock = getStock(selectedProduct.id);
+
+    if(stock <= 0){
+        alert(
+            "Sorry! " + selectedProduct.name +
+            " is currently OUT OF STOCK."
+        );
+        return;
+    }
+
+    document.getElementById("modalTitle")
+        .textContent=selectedProduct.name;
+
+    document.getElementById("modalImage")
+        .src=selectedProduct.image;
+
+    document.getElementById("modalDescription")
+        .textContent=selectedProduct.description;
+
+    document.getElementById("modalLimitations")
+        .textContent=selectedProduct.limitations ||
+        "No specific limitations listed for this product.";
+
+    document.getElementById("modalPrice")
+        .textContent=money(selectedProduct.price);
+
+    const stockBox =
+        document.getElementById("modalStock");
+
+    if(stockBox){
+        stockBox.innerHTML = stockStatus(selectedProduct.id);
+    }
+
+    const quantityInput =
+        document.getElementById("quantity");
+
+    quantityInput.value=1;
+    quantityInput.min=1;
+    quantityInput.max=stock;
+
+    updateModalTotal();
+
+    const addButton =
+        document.querySelector('#productModal button.cart');
+
+    const buyButton =
+        document.querySelector('#productModal button.buy');
+
+    if(addButton) addButton.disabled = false;
+    if(buyButton) buyButton.disabled = false;
+
+    document.getElementById("productModal")
+        .classList.add("show");
+
+}
+
+function closeModal(){
+
+    document.getElementById("productModal")
+        .classList.remove("show");
+
+}
+
+
+document.getElementById("quantity")
+.addEventListener("input",updateModalTotal);
+
+document.getElementById("quantity")
+.addEventListener("change",updateModalTotal);
+
+
+function updateModalTotal(){
+
+    if(!selectedProduct) return;
+
+    const stock = getStock(selectedProduct.id);
+
+    let quantity =
+        Number(
+            document.getElementById("quantity").value
+        );
+
+    if(quantity<1) quantity=1;
+
+    if(quantity>stock){
+        quantity=stock;
+        document.getElementById("quantity").value=stock;
+    }
+
+    document.getElementById("modalTotal")
+        .textContent=
+        money(selectedProduct.price * quantity);
+
+    const stockBox =
+        document.getElementById("modalStock");
+
+    if(stockBox){
+        stockBox.innerHTML = stockStatus(selectedProduct.id);
+    }
+
+}
+
+
+/* ==================================================
+GET SELECTED ITEM
+================================================== */
+
+function getSelectedItem(){
+
+    let quantity =
+        Number(
+            document.getElementById("quantity").value
+        );
+
+    const stock = getStock(selectedProduct.id);
+
+    if(quantity<1){
+        quantity=1;
+    }
+
+    if(quantity>stock){
+        quantity=stock;
+    }
+
+    let size =
+        document.getElementById("size").value;
+
+    let color =
+        document.getElementById("color").value;
+
+    return {
+
+        id:selectedProduct.id,
+
+        name:selectedProduct.name,
+
+        price:selectedProduct.price,
+
+        image:selectedProduct.image,
+
+        size:size,
+
+        color:color,
+
+        quantity:quantity,
+
+        total:selectedProduct.price * quantity
+
+    };
+
+}
+
+
+/* ==================================================
+ADD TO CART
+================================================== */
+
+function addToCart(){
+
+    if(!selectedProduct) return;
+
+    const stock = getStock(selectedProduct.id);
+
+    if(stock <= 0){
+        alert(
+            "Sorry! " + selectedProduct.name +
+            " is OUT OF STOCK."
+        );
+        return;
+    }
+
+    const item=getSelectedItem();
+
+    if(item.quantity > stock){
+        alert(
+            "Only " + stock + " unit(s) of " +
+            selectedProduct.name + " are available."
+        );
+        return;
+    }
+
+    item.cartId=
+        Date.now()+Math.random();
+
+    cart.push(item);
+
+    saveData();
+
+    closeModal();
+
+    updateCounts();
+
+    showToast(
+        selectedProduct.name+
+        " added to cart! Stock remaining: " +
+        (stock-item.quantity)
+    );
+
+}
+
+
+/* ==================================================
+BUY NOW
+================================================== */
+
+function buyNow(){
+
+    if(!selectedProduct) return;
+
+    const stock = getStock(selectedProduct.id);
+
+    if(stock <= 0){
+        alert(
+            "Sorry! " + selectedProduct.name +
+            " is OUT OF STOCK."
+        );
+        return;
+    }
+
+    const item=getSelectedItem();
+
+    if(item.quantity > stock){
+        alert(
+            "Only " + stock + " unit(s) of " +
+            selectedProduct.name + " are available."
+        );
+        return;
+    }
+
+    selectedAction="buy";
+
+    closeModal();
+
+    openCheckout(
+        [item],
+        "DIRECT PURCHASE"
+    );
+
+}
+
+
+/* ==================================================
+CHECKOUT
+================================================== */
+
+function openCheckout(items,title){
+
+    document.querySelectorAll('input[name="paymentMethod"]')
+        .forEach(input => {
+            input.checked = input.value === "Cash on Delivery";
+        });
+
+    document.querySelectorAll(".payment-option")
+        .forEach(option => option.classList.remove("selected"));
+
+    const defaultPayment =
+        document.querySelector('input[name="paymentMethod"][value="Cash on Delivery"]');
+
+    if(defaultPayment){
+        defaultPayment.closest(".payment-option").classList.add("selected");
+    }
+
+    const total =
+        items.reduce(
+            (sum,item)=>
+            sum+item.total,
+            0
+        );
+
+
+    document.getElementById("checkoutSummary")
+        .innerHTML=`
+
+        <b>${title}</b>
+        <br><br>
+
+        ${items.map(item=>`
+
+            ${item.name}
+            —
+            Size ${item.size}
+            —
+            ${item.color}
+            —
+            Qty ${item.quantity}
+
+            <br>
+
+        `).join("")}
+
+        <br>
+
+        <b>
+            Total: ${money(total)}
+        </b>
+
+        <div style="margin-top:12px;color:#aeb9c5">
+            💳 Payment method:
+            <b style="color:#fff">
+                Select below
+            </b>
+        </div>
+
+    `;
+
+
+    document.getElementById("checkoutModal")
+        .classList.add("show");
+
+}
+
+
+function closeCheckout(){
+
+    document.getElementById("checkoutModal")
+        .classList.remove("show");
+
+}
+
+
+/* ==================================================
+PAYMENT METHOD SELECTION
+================================================== */
+
+function selectPayment(option){
+
+    document.querySelectorAll(".payment-option")
+        .forEach(item => item.classList.remove("selected"));
+
+    option.classList.add("selected");
+
+    const radio = option.querySelector('input[type="radio"]');
+
+    if(radio){
+        radio.checked = true;
+    }
+}
+
+
+/* ==================================================
+COMPLETE PURCHASE
+================================================== */
+
+function completePurchase(){
+
+    const name =
+        document
+        .getElementById("customerName")
+        .value.trim();
+
+    const address =
+        document
+        .getElementById("customerAddress")
+        .value.trim();
+
+    const contact =
+        document
+        .getElementById("customerContact")
+        .value.trim();
+
+    const selectedPayment =
+        document.querySelector('input[name="paymentMethod"]:checked');
+
+    const paymentMethod =
+        selectedPayment
+        ? selectedPayment.value
+        : "Cash on Delivery";
+
+
+    if(!name || !address || !contact){
+
+        alert(
+            "Please enter Name, Address and Contact Number."
+        );
+
+        return;
+
+    }
+
+
+    let items;
+
+
+    if(selectedAction==="cart"){
+
+        items=[...cart];
+
+    }else{
+
+        items=[getSelectedItem()];
+
+    }
+
+    /* Check stock before accepting the order */
+    const requestedByProduct = {};
+
+    items.forEach(item => {
+        requestedByProduct[item.id] =
+            (requestedByProduct[item.id] || 0) +
+            Number(item.quantity);
+    });
+
+    for(const productId in requestedByProduct){
+
+        const requested = requestedByProduct[productId];
+        const available = getStock(Number(productId));
+        const product = products.find(
+            p => p.id === Number(productId)
+        );
+
+        if(requested > available){
+
+            alert(
+                "Order cannot be completed. " +
+                (product ? product.name : "This product") +
+                " has only " + available +
+                " unit(s) left in stock."
+            );
+
+            if(available <= 0){
+                renderProducts();
+            }
+
+            return;
+        }
+    }
+
+    /* Deduct the purchased quantity from inventory */
+    Object.keys(requestedByProduct).forEach(productId => {
+        inventory[productId] =
+            getStock(Number(productId)) -
+            requestedByProduct[productId];
+    });
+
+    saveInventory();
+
+
+    const now=new Date();
+
+    const receive=new Date(now);
+
+    receive.setDate(
+        receive.getDate()+5
+    );
+
+
+    const purchase={
+
+        orderId:
+            "SS-"+Date.now(),
+
+        customerName:name,
+
+        address:address,
+
+        contact:contact,
+
+        paymentMethod:paymentMethod,
+
+        paymentStatus:
+            paymentMethod === "Cash on Delivery"
+                ? "Pay upon delivery"
+                : "Payment method selected - confirm with ShoeSpot owner",
+
+        purchaseDate:
+            formatDateTime(now),
+
+        receiveDate:
+            formatDate(receive),
+
+        items:items,
+
+        total:
+            items.reduce(
+                (sum,item)=>
+                sum+item.total,
+                0
+            )
+
+    };
+
+
+    purchases.unshift(purchase);
+
+
+    if(selectedAction==="cart"){
+        cart=[];
+    }
+
+
+    saveData();
+
+    closeCheckout();
+
+
+    document.getElementById("customerName")
+        .value="";
+
+    document.getElementById("customerAddress")
+        .value="";
+
+    document.getElementById("customerContact")
+        .value="";
+
+    document.querySelectorAll('input[name="paymentMethod"]')
+        .forEach(input => {
+            input.checked = input.value === "Cash on Delivery";
+        });
+
+    document.querySelectorAll(".payment-option")
+        .forEach(option => option.classList.remove("selected"));
+
+    const codOption =
+        document.querySelector('input[name="paymentMethod"][value="Cash on Delivery"]');
+
+    if(codOption){
+        codOption.closest(".payment-option").classList.add("selected");
+    }
+
+
+    updateCounts();
+
+    showReceipt(purchase);
+
+}
+
+
+/* ==================================================
+DATE
+================================================== */
+
+function formatDateTime(date){
+
+    return date.toLocaleString(
+        "en-PH",
+        {
+            year:"numeric",
+            month:"long",
+            day:"numeric",
+            hour:"numeric",
+            minute:"2-digit",
+            second:"2-digit"
+        }
+    );
+
+}
+
+
+function formatDate(date){
+
+    return date.toLocaleDateString(
+        "en-PH",
+        {
+            year:"numeric",
+            month:"long",
+            day:"numeric"
+        }
+    );
+
+}
+
+
+/* ==================================================
+CART
+================================================== */
+
+function renderCart(){
+
+    const box =
+        document.getElementById("cartContent");
+
+
+    if(cart.length===0){
+
+        box.innerHTML=`
+
+            <div class="empty">
+
+                🛒 Your cart is empty.
+
+                <br><br>
+
+                <button
+                    class="small-btn btn-blue"
+                    onclick="showPage('shop')">
+                    SHOP NOW
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const grandTotal =
+        cart.reduce(
+            (sum,item)=>
+            sum+item.total,
+            0
+        );
+
+
+    box.innerHTML=`
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${cart.map(item=>`
+
+                        <tr>
+
+                            <td>${item.name}</td>
+
+                            <td>${item.size}</td>
+
+                            <td>${item.color}</td>
+
+                            <td>${item.quantity}</td>
+
+                            <td>${money(item.price)}</td>
+
+                            <td>${money(item.total)}</td>
+
+                            <td>
+
+                                <button
+                                    class="small-btn btn-red"
+                                    onclick="removeCartItem(${item.cartId})">
+                                    REMOVE
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    `).join("")}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div
+            class="info-card"
+            style="margin-top:18px">
+
+            <h3>
+                Cart Total:
+                ${money(grandTotal)}
+            </h3>
+
+
+            <button
+                class="small-btn btn-blue"
+                onclick="checkoutCart()">
+                💳 BUY CART ITEMS
+            </button>
+
+
+            <button
+                class="small-btn btn-red"
+                onclick="clearCart()">
+                CLEAR CART
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function removeCartItem(cartId){
+
+    cart =
+        cart.filter(
+            item=>item.cartId!==cartId
+        );
+
+    saveData();
+
+    renderCart();
+
+    updateCounts();
+
+}
+
+
+function clearCart(){
+
+    if(cart.length===0) return;
+
+
+    if(
+        confirm(
+            "Clear all items from your cart?"
+        )
+    ){
+
+        cart=[];
+
+        saveData();
+
+        renderCart();
+
+        updateCounts();
+
+    }
+
+}
+
+
+function checkoutCart(){
+
+    if(cart.length===0) return;
+
+    selectedAction="cart";
+
+    openCheckout(
+        [...cart],
+        "CART PURCHASE"
+    );
+
+}
+
+
+/* ==================================================
+PURCHASE HISTORY
+================================================== */
+
+function renderHistory(){
+
+    const box =
+        document.getElementById("historyContent");
+
+
+    if(purchases.length===0){
+
+        box.innerHTML=`
+
+            <div class="empty">
+
+                📦 No purchases yet.
+
+                <br><br>
+
+                <button
+                    class="small-btn btn-blue"
+                    onclick="showPage('shop')">
+                    SHOP NOW
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    box.innerHTML=`
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>Qty</th>
+                        <th>Purchase Date</th>
+                        <th>Receive Date</th>
+                        <th>Payment</th>
+                        <th>Total</th>
+                        <th>Receipt</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${purchases.map(
+                        (purchase,index)=>
+
+                        purchase.items.map(
+                            item=>`
+
+                            <tr>
+
+                                <td>
+                                    ${purchase.orderId}
+                                </td>
+
+                                <td>
+                                    ${item.name}
+                                </td>
+
+                                <td>
+                                    ${item.size}
+                                </td>
+
+                                <td>
+                                    ${item.color}
+                                </td>
+
+                                <td>
+                                    ${item.quantity}
+                                </td>
+
+                                <td>
+                                    ${purchase.purchaseDate}
+                                </td>
+
+                                <td>
+                                    <b>
+                                        ${purchase.receiveDate}
+                                    </b>
+                                </td>
+
+                                <td>
+                                    ${money(item.total)}
+                                </td>
+
+                                <td>
+
+                                    <button
+                                        class="small-btn btn-blue"
+                                        onclick="showReceiptByIndex(${index})">
+                                        VIEW
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        `
+                        ).join("")
+
+                    ).join("")}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+RECEIPT
+================================================== */
+
+function showReceipt(purchase){
+
+    document.getElementById("receiptContent")
+        .innerHTML=
+        receiptHTML(purchase);
+
+    showPage("receiptPage");
+
+}
+
+
+function showReceiptByIndex(index){
+
+    const purchase=purchases[index];
+
+    if(purchase){
+        showReceipt(purchase);
+    }
+
+}
+
+
+function receiptHTML(p){
+
+    return `
+
+        <div class="receipt">
+
+            <h2>
+                👟 SHOE<span style="color:#2589ff">
+                SPOT
+                </span>
+            </h2>
+
+            <p style="text-align:center">
+                OFFICIAL PURCHASE RECEIPT
+            </p>
+
+            <hr>
+
+
+            <div class="receipt-row">
+                <span>Order ID</span>
+                <b>${p.orderId}</b>
+            </div>
+
+
+            <div class="receipt-row">
+                <span>Customer</span>
+                <b>${p.customerName}</b>
+            </div>
+
+
+            <div class="receipt-row">
+                <span>Contact</span>
+                <b>${p.contact}</b>
+            </div>
+
+
+            <div class="receipt-row">
+                <span>Address</span>
+                <b style="max-width:65%;text-align:right">
+                    ${p.address}
+                </b>
+            </div>
+
+
+            <div class="receipt-row">
+                <span>Payment Method</span>
+                <b>${p.paymentMethod || "Cash on Delivery"}</b>
+            </div>
+
+            <div class="receipt-row">
+                <span>Payment Status</span>
+                <b style="max-width:65%;text-align:right">
+                    ${p.paymentStatus || "Pay upon delivery"}
+                </b>
+            </div>
+
+            <div class="receipt-row">
+                <span>Purchase Date</span>
+                <b>${p.purchaseDate}</b>
+            </div>
+
+
+            <div class="receipt-row">
+                <span>Expected Receive</span>
+                <b>${p.receiveDate}</b>
+            </div>
+
+
+            <hr>
+
+
+            ${p.items.map(item=>`
+
+                <div style="padding:10px 0">
+
+                    <b>${item.name}</b>
+
+                    <br>
+
+                    Size:
+                    ${item.size}
+                    |
+
+                    Color:
+                    ${item.color}
+                    |
+
+                    Quantity:
+                    ${item.quantity}
+
+                    <br>
+
+                    ${money(item.price)}
+                    ×
+                    ${item.quantity}
+
+                    <span style="float:right">
+                        <b>
+                            ${money(item.total)}
+                        </b>
+                    </span>
+
+                </div>
+
+            `).join("")}
+
+
+            <div class="receipt-row receipt-total">
+
+                <span>
+                    TOTAL
+                </span>
+
+                <span>
+                    ${money(p.total)}
+                </span>
+
+            </div>
+
+
+            <p
+                style="text-align:center;margin-top:20px">
+
+                Thank you for shopping at
+                ShoeSpot! 👟
+
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+SAVE DATA
+================================================== */
+
+function saveData(){
+
+    localStorage.setItem(
+        "shoeSpotCart",
+        JSON.stringify(cart)
+    );
+
+    localStorage.setItem(
+        "shoeSpotPurchases",
+        JSON.stringify(purchases)
+    );
+
+}
+
+
+/* ==================================================
+COUNTERS
+================================================== */
+
+function updateCounts(){
+
+    const cartCount =
+        cart.reduce(
+            (sum,item)=>
+            sum+Number(item.quantity),
+            0
+        );
+
+
+    document.getElementById("cartCount")
+        .textContent=cartCount;
+
+
+    document.getElementById("homeCartCount")
+        .textContent=cartCount;
+
+
+    document.getElementById("homePurchaseCount")
+        .textContent=purchases.length;
+
+
+    document.getElementById("productCount")
+        .textContent=products.length;
+
+}
+
+
+/* ==================================================
+TOAST
+================================================== */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent=message;
+
+    toast.style.display="block";
+
+
+    clearTimeout(window.toastTimer);
+
+
+    window.toastTimer =
+        setTimeout(function(){
+
+            toast.style.display="none";
+
+        },2200);
+
+}
+
+
+/* ==================================================
+INITIALIZE
+================================================== */
+
+renderProducts();
+
+updateCounts();
+
+</script>
+
+</body>
+</html>
